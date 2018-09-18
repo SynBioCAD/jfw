@@ -1,0 +1,565 @@
+
+@import (inline) "thirdparty/codemirror/codemirror.css";
+@import (inline) "thirdparty/codemirror/cm-dnaseq-mode.css";
+@import (inline) "thirdparty/codemirror/monokai.css";
+@import (inline) "thirdparty/codemirror/dialog.css";
+@import (inline) "thirdparty/codemirror/matchesonscrollbar.css";
+@import (inline) "thirdparty/font-awesome.css";
+@import (inline) "thirdparty/colorpicker.css";
+@import (inline) "thirdparty/loader.css";
+@import (inline) "thirdparty/hint.css";
+
+@import "variables.less";
+
+@import "dialog.less";
+@import "sidebar.less";
+@import "topbar.less";
+
+@import "jfw-forms.less";
+
+@import "button.less";
+
+@import "flow.less";
+
+
+svg {
+    overflow: visible;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+a {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+div.jfw-container {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+.jfw-long-input {
+
+    min-width: 300px;
+
+}
+
+.jfw-medium-input {
+
+    min-width: 150px;
+
+}
+
+.jfw-about a {
+
+    color: #eee;
+    text-decoration: none;
+
+}
+
+.jfw-about a:hover {
+    text-decoration: underline;
+}
+
+
+
+.jfw-about-logo {
+
+    background-color: white;
+    width: fit-content;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+    padding-top: 10px;
+
+
+}
+
+.jfw-no-select,svg,svg * {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.jfw-part:hover {
+    cursor: grab;
+}
+
+.jfw-part-dragging:hover {
+    cursor: grabbing;
+}
+
+
+
+.jfw-source-view-language-bar {
+    background-color: #555;
+}
+
+.jfw-source-view-language-bar-item {
+
+    width: 200px;
+    height: 32px;
+    border: none;
+    outline: none;
+    background-color: #666;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.jfw-source-view-language-bar-item:hover {
+    background-color: #777;
+}
+
+.jfw-source-view-language-bar-item.active {
+
+    width: 200px;
+    height: 32px;
+    border: none;
+    outline: none;
+    background-color: #777;
+    color: white;
+    font-weight: bold;
+
+}
+
+.jfw-normal-cursor {
+
+    cursor: default;
+
+}
+
+
+/* http://stackoverflow.com/questions/306252/how-to-align-checkboxes-and-their-labels-consistently-cross-browsers */
+input[type=checkbox], input[type=radio] {
+    vertical-align: -2px;
+    margin: 0;
+    padding: 0;
+}
+
+
+.jfw-context-menu {
+
+    background-color: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+    z-index: 999999
+
+}
+
+.jfw-context-menu-item {
+
+    padding: 6px;
+    padding-right: 80px;
+    color: #DDD;
+
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-size: 9pt;
+
+}
+
+.jfw-context-menu-item a.fa {
+    width: 10px;
+
+}
+
+.jfw-context-menu-heading {
+
+    font-weight: bold;
+
+}
+
+.jfw-context-menu-item:not(.jfw-context-menu-heading):hover {
+
+    background-color: rgba(255, 255, 255, 0.2);
+
+}
+
+.jfw-input {
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    color: #DDD;
+    padding: 5px;
+}
+
+.jfw-checkbox {
+    font-size: 9pt;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    color: #DDD;
+}
+
+
+/* http://stackoverflow.com/questions/1895476/how-to-style-a-select-dropdown-with-css-only-without-javascript
+ */
+.jfw-select {
+    .jfw-input;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.jfw-select::-ms-expand {
+    display: none;
+}
+
+
+.picker-wrapper {
+    width: 200px;
+    height: 200px;
+}
+
+.slide-wrapper {
+    width: 30px;
+    height: 200px;
+}
+
+.jfw-open-colorpicker:hover {
+    color: #FFB;
+    cursor: pointer;
+}
+
+.jfw-clear {
+    clear: both;
+}
+
+table.jfw-list {
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
+    width: 100%;
+}
+
+table.jfw-list th {
+    text-align: left;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+table.jfw-list thead {
+    display: block;
+}
+
+table.jfw-list tbody {
+    display: block;
+    max-height: 500px;
+    overflow-y: visible;
+    overflow-x: hidden;
+}
+
+table.jfw-list tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+table.jfw-list td, t {
+    border-style: none;
+    color: white;
+}
+
+table.jfw-list td {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 10pt;
+}
+
+table.jfw-list tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+
+.jfw-logo {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.jfw-status {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.jfw-search-results {
+    height: 400px;
+    overflow-x: none;
+    overflow-y: scroll;
+}
+
+span.jfw-spacer {
+    padding-right: 10px;
+
+}
+
+a.jfw-link {
+
+    cursor: pointer;
+    text-decoration: none;
+
+}
+
+a.jfw-link:hover {
+
+    text-decoration: underline;
+
+}
+
+.jfw-group-box {
+
+    background-color: rgb(30, 30, 30);
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+
+}
+
+.jfw-sequence {
+
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: visible;
+
+}
+
+.jfw-sequence-elements {
+
+    font-family: monospace;
+    display: inline-block;
+
+}
+
+.jfw-sequence-element {
+
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    display: inline-block;
+    font-size: 9pt;
+    /* display; table-cell; */
+    overflow: hidden;
+
+}
+
+.jfw-sequence-element-highlight {
+
+    color: yellow;
+    font-weight: bold;
+
+}
+
+
+
+.CodeMirror {
+
+    height: auto;
+
+}
+
+.jfw-error-box {
+
+    z-index: 99999999;
+    width: 800px;
+    height: 800px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 255, 1.0);
+    color: white;
+    font-family: monospace;
+    padding-left: 20px;
+    font-size: 12pt;
+    overflow-y: auto;
+
+
+
+
+
+}
+
+.jfw-svg-export-thumbnail {
+
+    background-color: #eee;
+    border-radius: 2px;
+
+}
+
+.jfw-flex-ltr {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+
+.jfw-yellow {
+    color: yellow;
+}
+
+.jfw-plasmid-browser {
+    background-color: #555;
+}
+
+
+.jfw-dragging {
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
+
+
+
+.jfw-tree-view {
+
+    width: '100%';
+    white-space: nowrap;
+    overflow-x: hidden;
+    line-height: 30px;
+    color: white;
+    font-size: 10pt;
+
+}
+
+.jfw-light .jfw-tree-view {
+    color: black;
+}
+
+.jfw-tree-view-arrow {
+
+    font-size: 16pt;
+    width: 20px;
+    height: 30px;
+    overflow: hidden;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+
+}
+
+.jfw-tree-view-label {
+    margin-left: 0px;
+    text-decoration: none;
+}
+
+
+.jfw-tree-view-label:hover {
+    text-decoration: none;
+}
+
+.jfw-tree-view-sidebar a:hover {
+    text-decoration: none;
+}
+
+.jfw-tree-view-line {
+    padding-left: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+.jfw-tree-view-controls {
+    display: none;
+}
+
+.jfw-tree-view-line:hover .jfw-tree-view-controls {
+    display: inline-block;
+}
+
+.jfw-tree-view-line:hover {
+    background-color: #444;
+}
+
+.jfw-light .jfw-tree-view-line:hover {
+    background-color: #EEF;
+}
+
+.jfw-tree-view-line-selected {
+    background-color: #666;
+}
+
+.jfw-tree-view-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.jfw-tree-view-edit:hover span {
+    color: yellow;
+}
+
+.jfw-tree-view-delete:hover span {
+    color: red;
+}
+
+.jfw-tree-view-line:hover .jfw-tree-view-create span {
+    color: #00FF00;
+}
+
+.jfw-tree-view-arrow:hover span {
+    color: #AAAAFF;
+}
+
+.jfw-tag-removable {
+    background-color: #777;
+    border-radius: 4px;
+    display: inline;
+    padding: 3px;
+    font-variant: small-caps;
+    text-transform: uppercase;
+}
+
+.jfw-input-autocomplete {
+    overflow-y: auto;
+    background-color: white;
+    font-size: 8pt;
+    padding: 3px;
+    max-height: 120px;
+    box-shadow: 4px 4px 5px -1px rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+
+.jfw-input-autocomplete > span {
+    display: block;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.jfw-input-autocomplete > span:hover {
+    background-color: yellow;
+}
+
+
+
+
+.jfw-light .loader {
+    filter: invert(100%);
+}
+
+

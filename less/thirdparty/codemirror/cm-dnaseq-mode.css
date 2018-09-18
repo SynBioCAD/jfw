@@ -1,0 +1,38 @@
+
+.cm-dnaseq-spacer {
+    
+    padding-right: 8px;
+
+}
+
+.cm-nucleotide-a {
+    color: #700;
+}
+
+.cm-nucleotide-t {
+    color: #007;
+}
+
+.cm-nucleotide-c {
+    color: #040;
+}
+
+.cm-nucleotide-g {
+}
+
+.cm-s-monokai .cm-nucleotide-a {
+    color: inherit;
+}
+
+.cm-s-monokai .cm-nucleotide-t {
+    color: inherit;
+}
+
+.cm-s-monokai .cm-nucleotide-c {
+    color: inherit;
+}
+
+.cm-s-monokai .cm-nucleotide-g {
+    color: inherit;
+}
+

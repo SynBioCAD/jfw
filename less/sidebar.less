@@ -1,0 +1,107 @@
+
+@import "variables.less";
+
+.jfw-sidebar {
+
+    /*padding-top: 20px;*/
+    background-color: #555;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* height: calc(~"100% - "@topbarHeight);*/
+    flex: 0 0 auto;
+    display: flex;
+}
+
+
+.jfw-sidebar-divisions {
+    flex: 1 1;
+    flex-grow: 0;
+
+    background-color: #222;
+
+}
+
+.jfw-sidebar-divisions-inner {
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+
+}
+
+.jfw-sidebar-division {
+    flex: 0 1;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-bottom: 1px solid #222;
+    user-select: none;
+    background-color: #999;
+    cursor: pointer;
+}
+
+.jfw-sidebar-division:hover {
+    background-color: #ccc;
+}
+
+.jfw-sidebar-division.selected {
+    background-color: #ddd;
+}
+
+.jfw-sidebar-body {
+    flex: 1 1;
+
+}
+
+.jfw-light .jfw-sidebar {
+    background-color: white;
+}
+
+.jfw-light.jfw-sidebar {
+    background-color: white;
+}
+
+.jfw-sidebar-header {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-left: 5px;
+    cursor: pointer;
+    padding-top: 3px;
+    /*margin-top: 8px;*/
+}
+
+.jfw-sidebar-header-text {
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding-left: 5px;
+}
+
+.jfw-sidebar-section {
+    padding-top: 5px;
+    color: #DDD;
+}
+
+.jfw-sidebar-handle {
+    flex-basis: 3px;
+    background-color: #333;
+    border-left: 1px solid #222;
+    border-right: 1px solid #444;
+}
+
+.jfw-sidebar-handle:hover {
+    background-color: #99F;
+    border-left: 1px solid #99F;
+    border-right: 1px solid #99F;
+    cursor: col-resize;
+}
+

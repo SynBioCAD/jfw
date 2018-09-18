@@ -1,0 +1,94 @@
+
+@import "variables.less";
+
+.jfw-topbar {
+
+    background-color: #333;
+    pointer-events: none;
+    overflow: hidden;
+    width: 100%;
+    height: @topbarHeight;
+
+    background-image: url('../img/synform.svg');
+    background-position: right 10px bottom 10px;
+    background-size: auto calc(@topbarHeight * 0.6);
+    background-repeat: no-repeat;
+
+}
+
+.jfw-topbar-container {
+    padding: 0;
+    pointer-events: none;
+}
+
+.jfw-topbar-left {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.jfw-topbar-right {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.jfw-topbar-tab {
+    font-weight: bold;
+    font-family: sans-serif;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    font-size: large;
+
+    background-color: #333;
+    border: none;
+    color: #DDD;
+
+    border-radius: 10px 10px 0px 0px;
+
+    pointer-events: all;
+    cursor: pointer;
+
+    z-index: 10000;
+
+    outline: none;
+
+    margin-top: @topbarHeight - @topbarTabHeight;
+    height: @topbarTabHeight;
+}
+
+
+.jfw-topbar-tab:hover {
+
+    background-color: #444;
+}
+
+.jfw-topbar-tab.active {
+
+    background-color: #555;
+}
+
+
+.jfw-topbar-config-button {
+
+    font-size: xx-large;
+    color: #DDD;
+    cursor: pointer;
+    pointer-events: all;
+
+}
+
+.jfw-topbar-config-button:hover {
+
+    font-size: xx-large;
+    color: white;
+
+}
+
