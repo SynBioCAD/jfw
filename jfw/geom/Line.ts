@@ -47,9 +47,25 @@ export default class Line {
         return this.b.subtract(this.a).normalise()
     }
 
-    /* adjuststart & adjustned need porting to typescript
-     */
+    adjustEnd(delta:number):Line {
 
+        let len = this.getLength()
+        let dir = this.getDirectionVector()
+
+        let newVec = dir.multiplyScalar(len + delta)
+
+        return new Line(this.a, this.a.add(newVec))
+    }
+
+    adjustStart(delta:number):Line {
+
+        let len = this.getLength()
+        let dir = this.getDirectionVector()
+
+        let newVec = dir.multiplyScalar(len + delta)
+
+        return new Line(this.b.subtract(newVec), this.a)
+    }
 }
 
 

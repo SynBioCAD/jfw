@@ -193,6 +193,14 @@ export default class Vec2 {
         return Vec2.fromXY(pod.x, pod.y)
     }
 
+    get leftPerpendicular():Vec2 {
+        return Vec2.fromXY(this.y, - this.x)
+    }
+
+    get rightPerpendicular():Vec2 {
+        return Vec2.fromXY(- this.y, this.x)
+    }
+
 }
 
 

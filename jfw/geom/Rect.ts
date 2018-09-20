@@ -179,6 +179,15 @@ export default class Rect
 
     }
 
+    surroundPoint(point:Vec2): Rect {
+
+        return new Rect(
+            this.topLeft.min(point),
+            this.bottomRight.max(point)
+        )
+
+    }
+
     multiply(v:Vec2): Rect {
 
         return new Rect(
@@ -601,6 +610,21 @@ export default class Rect
             this.bottomRight.round()
         )
     
+    }
+
+    static surroundingPoints(points:Vec2[]) {
+
+        if(points.length === 0) {
+            throw new Error('need at least 1 point')
+        }
+
+        let rect = Rect.fromPosAndSize(points[0], Vec2.fromXY(0, 0))
+
+        for(let n = 1; n < points.length; ++ n) {
+            rect = rect.surroundPoint(points[n])
+        }
+
+        return rect
     }
 
 }
