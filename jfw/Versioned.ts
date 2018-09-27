@@ -13,8 +13,10 @@ export default abstract class Versioned {
             v.versionToken = o
         }
 
-        for(var v2:Versioned|undefined = this; v2; v2 = v2.getVersionedParent()) {
-            v2.onVersionChanged()
+        if(!Versioned.paused) {
+            for(var v2:Versioned|undefined = this; v2; v2 = v2.getVersionedParent()) {
+                v2.onVersionChanged()
+            }
         }
     }
 
@@ -28,7 +30,19 @@ export default abstract class Versioned {
         return this.versionToken === rhs.versionToken
     }
 
+    setSameVersionAs(rhs:Versioned):void {
+        this.versionToken = rhs.versionToken
+    }
+
     abstract onVersionChanged():void
 
+    static paused:boolean = false
+
+    static pauseCallbacks() {
+        this.paused = true
+    }
+    static unpauseCallbacks() {
+        this.paused = false
+    }
 
 }
