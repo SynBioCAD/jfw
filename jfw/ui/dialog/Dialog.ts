@@ -155,7 +155,7 @@ export default abstract class Dialog {
         }
 
         var buttons = [
-            h('a.fa.fa-close', {
+            h('a.fa.fa-window-close', {
                 'ev-click': clickEvent(clickCloseButton, { dialog: this })
             }),
         ]
