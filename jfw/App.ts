@@ -51,6 +51,7 @@ export default abstract class App
         delegator.listenTo('mousemove')
         delegator.listenTo('mouseover')
         delegator.listenTo('mouseout')
+        delegator.listenTo('mouseup')
 
         delegator.listenTo(wheelEvent.getEventName())
 

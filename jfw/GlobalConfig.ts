@@ -5,33 +5,42 @@ var config = {}
 
 export default class GlobalConfig {
 
-    static init():Promise<void> {
+    static init(_config?:any):Promise<void> {
 
-        return new Promise((resolve, reject) => {
+        if(_config) {
 
-            console.log('Retreiving global config...')
+            config = _config
 
-            request('./config', (err, res, body) => {
+            return Promise.resolve()
 
-                console.log(['we got: ', err, res, typeof body, body, JSON.stringify(body)].join(', '))
+        } else {
 
-                if(err) {
-                    reject(err)
-                    return
-                }
+            return new Promise((resolve, reject) => {
 
-                if(res.statusCode && res.statusCode >= 300) {
-                    reject(new Error('HTTP ' + res.statusCode))
-                    return
-                }
+                console.log('Retreiving global config...')
 
-                config = JSON.parse(body)
+                request('./config', (err, res, body) => {
 
-                resolve()
+                    console.log(['we got: ', err, res, typeof body, body, JSON.stringify(body)].join(', '))
+
+                    if(err) {
+                        reject(err)
+                        return
+                    }
+
+                    if(res.statusCode && res.statusCode >= 300) {
+                        reject(new Error('HTTP ' + res.statusCode))
+                        return
+                    }
+
+                    config = JSON.parse(body)
+
+                    resolve()
+                })
+
+
             })
-
-
-        })
+        }
 
 
     }
