@@ -10,6 +10,8 @@ import uuid from 'node-uuid'
 
 import { App } from '../..'
 
+import Hook from '../../Hook'
+
 export class DialogOptions {
     parent: Dialog|null
     modal: boolean
@@ -26,6 +28,8 @@ export default abstract class Dialog {
     isFullScreen: boolean
     pos: Vec2
     width: number
+
+    onClose:Hook<void>
 
     constructor(app:App, opts:DialogOptions) {
         
@@ -44,6 +48,7 @@ export default abstract class Dialog {
         this.title = 'foo'
         this.canFullScreen = true
         this.isFullScreen = false
+        this.onClose = new Hook<void>()
     }
 
     setTitle(title:string) {

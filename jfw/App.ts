@@ -196,6 +196,7 @@ export default abstract class App
 
         this.dialogs.splice(i, 1)
 
+        dialog.onClose.fire(undefined)
 
         if(dialog.parent) {
 

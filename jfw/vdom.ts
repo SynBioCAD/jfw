@@ -10,6 +10,7 @@ import patch = require('virtual-dom/vdom/patch')
 import create = require('virtual-dom/vdom/create-element')
 //import partial from require('vdom-thunk')
 import crappyFromHTML = require('html2hscript')
+import toHTML = require('vdom-to-html')
 
 
 import active from './active'
@@ -41,5 +42,6 @@ export {
     patch,
     create,
     active,
-    fromHTML
+    fromHTML,
+    toHTML
 }
