@@ -159,20 +159,22 @@ export default abstract class Dialog {
             attr.style['background-color'] = 'rgba(0, 0, 0, 0.9)'
         }
 
-        var buttons = [
-            h('a.fa.fa-window-close', {
-                'ev-click': clickEvent(clickCloseButton, { dialog: this })
-            }),
-        ]
+        var buttons:VNode[] = []
 
         if(this.canFullScreen) {
             buttons = buttons.concat([
-                h('span', '  '),
                 h('a.fa.fa-expand', {
                     'ev-click': clickEvent(clickFullScreenButton, { dialog: this })
-                })
+                }),
+                h('span', '  ')
             ])
         }
+
+        buttons.push(
+            h('a.fa.fa-window-close', {
+                'ev-click': clickEvent(clickCloseButton, { dialog: this })
+            })
+        )
 
         var dialogElements = [
 
