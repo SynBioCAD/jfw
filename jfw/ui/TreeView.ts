@@ -9,6 +9,8 @@ import { VNode, h } from '../vdom'
 import App from "../App";
 import Dialog from "./dialog/Dialog";
 
+import keyupChangeEvent from '../event/keyup-change-handler'
+
 export class TreeNode {
     id:string = ''
     title:string = ''
@@ -24,6 +26,8 @@ export default class TreeView extends View {
     _onSelect: (id:string) => void
     fetchNodes: () => Array<TreeNode>
     currentNodeID: string
+    searchable: boolean
+    searchQuery: string
 
     constructor(app:App, dialog?:Dialog) {
 
@@ -33,6 +37,8 @@ export default class TreeView extends View {
         this._onSelect = (parentID?:string) => { console.warn('onSelect stub') }
         this._onCreate = (id:string) => { console.warn('onCreate stub') }
         this.editable = false
+        this.searchable = false
+        this.searchQuery = ''
 
     }
 
@@ -69,6 +75,17 @@ export default class TreeView extends View {
 
     }
 
+    setSearchable(searchable:boolean):void {
+
+        this.searchable = searchable
+
+    }
+
+    setSearchQuery(searchQuery:string):void {
+        this.searchQuery = searchQuery
+        this.update()
+    }
+
     render():VNode {
 
         const view = this
@@ -76,19 +93,48 @@ export default class TreeView extends View {
         if(!this.fetchNodes)
             return h('div.loader')
 
+        let searchQuery = this.searchQuery
+
         const nodes:Array<TreeNode> = this.fetchNodes()
 
         //if(nodes.length === 0)
             //return h('div.loader')
 
-        return h('div', [
-            h('div.jfw-tree-view',
-                nodes.map((node) => renderNode(node, 0, this.expanded, this.currentNodeID, this.editable))
-                     .concat(this.editable ? renderCreateNode(null, 0) : [])
-            )
-        ])
+        let elems:VNode[] = []
 
-        function renderNode(node:TreeNode, depth:number, expanded:{}, currentNodeID:string, editable:boolean) {
+        if(this.searchable) {
+            elems.push(h('input.jfw-long-input', {
+                'ev-keyup': keyupChangeEvent(onChangeSearch, { view: this }),
+                value: this.searchQuery
+            }))
+        }
+
+        let renderedNodes:VNode[] = []
+
+        for(let node of nodes) {
+
+            let { renderedNode, anyVisible } = renderNode(node, 0, this.expanded, this.currentNodeID, this.editable)
+
+            if(anyVisible) {
+                renderedNodes.push(renderedNode)
+            }
+        }
+
+        elems.push(
+            h('div.jfw-tree-view',
+                renderedNodes.concat(this.editable ? renderCreateNode(null, 0) : [])
+            )
+        )
+
+        return h('div', elems)
+
+        function nodeVisible(node:TreeNode) {
+            return !searchQuery || node.title.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
+        }
+
+        function renderNode(node:TreeNode, depth:number, expanded:{}, currentNodeID:string, editable:boolean):{ renderedNode:VNode, anyVisible:boolean } {
+
+            let anyVisible:boolean = false
 
             var s:string = ''
 
@@ -105,7 +151,10 @@ export default class TreeView extends View {
             } else {
                 icon = h('span.fa')
             }
-            
+
+            if(nodeVisible(node)) {
+                anyVisible = true
+            }
 
             const selected = node.id === currentNodeID
 
@@ -141,16 +190,26 @@ export default class TreeView extends View {
                 ] : []))
             ]
 
-            if(node.subnodes.length > 0 && expanded[node.id]) {
+            if(node.subnodes.length > 0 && (expanded[node.id] || searchQuery)) {
+
+                let renderedSubnodes:VNode[] = []
+
+                for(let subnode of node.subnodes) {
+
+                    let subnodeRes = renderNode(subnode, depth + 1, expanded, currentNodeID, editable)
+
+                    if(subnodeRes.anyVisible) {
+                        anyVisible = true
+                        renderedSubnodes.push(subnodeRes.renderedNode)
+                    }
+                }
+
                 elements.push(
-                    h('div',
-                        node.subnodes.map((subnode) => renderNode(subnode, depth + 1, expanded, currentNodeID, editable))
-                            .concat(editable ? renderCreateNode(node, depth + 1) : [])
-                    )
+                    h('div', renderedSubnodes.concat(editable ? renderCreateNode(node, depth + 1) : []))
                 )
             }
 
-            return h('div', elements)
+            return { renderedNode: h('div', elements), anyVisible }
         }
 
         function renderCreateNode(parentNode:TreeNode|null, depth:number) {
@@ -222,6 +281,16 @@ function clickCreateNode(data) {
     view._onCreate(parentNode ? parentNode.id : null)
 
     app.update()
+
+}
+
+function onChangeSearch(data) {
+
+    let view = data.view
+    let q = data.value
+
+    view.setSearchQuery(q)
+
 
 }
 
