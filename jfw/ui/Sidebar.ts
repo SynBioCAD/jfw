@@ -94,6 +94,8 @@ export default abstract class Sidebar {
 
         const app:App = this.app
 
+        let sidebar = this
+
         var children:Array<VNode> = []
 
         let divisions = h('div.jfw-sidebar-divisions', h('div.jfw-sidebar-divisions-inner', this.divisions.map((division) => {
@@ -121,7 +123,11 @@ export default abstract class Sidebar {
                 if(show) {
 
                     if(section.view) {
-                        children.push(h('div.jfw-sidebar-section', [
+                        children.push(h('div.jfw-sidebar-section', {
+                            style: {
+                                width: sidebar.width + 'px'
+                            }
+                         }, [
                             section.view.render()
                         ]))
                     } else {
@@ -150,7 +156,8 @@ export default abstract class Sidebar {
                 return h('div.jfw-sidebar-header', {
 
                     style: {
-                        'margin-left': (indent * indentSize) + 'px'
+                        'margin-left': (indent * indentSize) + 'px',
+                        'width': sidebar.width - indent * indentSize
                     },
 
                     'ev-click': clickEvent(clickHeader, { app: app, section: section })
