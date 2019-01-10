@@ -1,7 +1,7 @@
 {
-  "name": "jfw",
-  "version": "0.1.0",
-  "description": "Monolithic framework for the kind of things I like to do",
+  "name": "@biocad/jfw",
+  "version": "0.3.0",
+  "description": "Monolithic framework for applications such as biocad",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
