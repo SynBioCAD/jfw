@@ -87,5 +87,53 @@ export default class LinearRange {
         return range.start >= this.start && range.end <= this.end
 
     }
+
+    chop(oldRange:LinearRange, newLength:number):LinearRange|null {
+
+        let ourRange = this.normalise()
+        let toChop = oldRange.normalise()
+
+        let len = toChop.end - toChop.start
+        let ourLen = this.end - this.start
+
+        if(toChop.start >= ourRange.end) {
+            // outside right, nothing to do
+            return new LinearRange(ourRange.start, ourRange.end)
+        }
+
+        if(ourRange.start >= toChop.start && ourRange.end <= toChop.end) {
+            // contained by toChop - whole range is gone
+            return null
+        }
+
+        if(toChop.start >= ourRange.start && toChop.end <= ourRange.end) {
+            // inside, shorten and add new length
+            return new LinearRange(ourRange.start, ourRange.end - len + newLength)
+        }
+
+        if(toChop.end <= ourRange.start) {
+            // outside left, move left and then right again by new length
+            return new LinearRange(ourRange.start - len + newLength, ourRange.end - len + newLength)
+        }
+
+        /*
+        if(toChop.start <= ourRange.start && toChop.end >= ourRange.start) {
+            // contains left, trim and add size of insertion
+            return new LinearRange(toChop.start + newLength, toChop.start + newLength + ourLen)
+        }
+
+        if(toChop.start <= ourRange.end && toChop.end >= ourRange.end) {
+            // contains right, trim
+            return new LinearRange(ourRange.start, toChop.start)
+        }*/
+
+        console.log('ourRange', ourRange, 'toChop', toChop)
+
+        throw new Error('not sure how to chop that')
+    }
+
+    toString():string {
+        return '(' + this.start + ' -> ' + this.end + ')'
+    }
 }
 
