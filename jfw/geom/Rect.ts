@@ -627,6 +627,12 @@ export default class Rect
         return rect
     }
 
+    edgePointForDirectionVector(v:Vec2):Vec2 {
+
+        return this.center().add(
+            this.size().divide(Vec2.fromScalar(2)).multiply(v)
+        )
+    }
 }
 
 

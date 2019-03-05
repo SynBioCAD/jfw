@@ -90,18 +90,7 @@ export default class Vec2 {
     }
 
     direction(rhs:Vec2): Vec2 {
-
-        if(rhs.x > this.x) {
-            return Vec2.fromXY(1, 0)
-        } else if(rhs.x < this.x) {
-            return Vec2.fromXY(-1, 0)
-        } else if(rhs.y > this.y) {
-            return Vec2.fromXY(0, 1)
-        } else if(rhs.y < this.y) {
-            return Vec2.fromXY(0, -1)
-        } else {
-            return Vec2.fromXY(0, 0)
-        }
+        return rhs.subtract(this).normalise()
     }
 
     equals(rhs:Vec2): boolean {

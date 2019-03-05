@@ -15,6 +15,16 @@ export default class LinearRangeSet {
         }
     }
 
+    clone():LinearRangeSet {
+        let newSet = new LinearRangeSet()
+
+        for(let range of this.ranges) {
+            newSet.push(new LinearRange(range.start, range.end))
+        }
+
+        return newSet
+    }
+
     sort():LinearRangeSet {
 
         return new LinearRangeSet(
@@ -45,14 +55,14 @@ export default class LinearRangeSet {
 
     invert():LinearRangeSet {
 
-        //const set:LinearRangeSet = this.sort()
+        let sorted = this.sort()
 
         var newSet = new LinearRangeSet()
 
-        for (var i:number = 0; i < this.ranges.length; ++i) {
+        for (var i:number = 0; i < sorted.ranges.length; ++i) {
 
-            const curRange:LinearRange = this.ranges[i]
-            const nextRange:LinearRange = this.ranges[i + 1]
+            const curRange:LinearRange = sorted.ranges[i]
+            const nextRange:LinearRange = sorted.ranges[i + 1]
 
             if (nextRange === undefined)
                 break

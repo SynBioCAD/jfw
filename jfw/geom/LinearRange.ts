@@ -116,18 +116,27 @@ export default class LinearRange {
             return new LinearRange(ourRange.start - len + newLength, ourRange.end - len + newLength)
         }
 
-        /*
         if(toChop.start <= ourRange.start && toChop.end >= ourRange.start) {
-            // contains left, trim and add size of insertion
-            return new LinearRange(toChop.start + newLength, toChop.start + newLength + ourLen)
+            // contains left
+
+            // trim to the end of the chop
+            let start = toChop.end
+
+            // subtract the length of the chop
+            start -= len
+
+            // add the new length
+            start += newLength
+
+            return new LinearRange(start, start + (toChop.end - ourRange.start))
         }
 
         if(toChop.start <= ourRange.end && toChop.end >= ourRange.end) {
             // contains right, trim
             return new LinearRange(ourRange.start, toChop.start)
-        }*/
+        }
 
-        console.log('ourRange', ourRange, 'toChop', toChop)
+        console.log('ourRange', ourRange, 'toChop', toChop, 'newLength', newLength)
 
         throw new Error('not sure how to chop that')
     }

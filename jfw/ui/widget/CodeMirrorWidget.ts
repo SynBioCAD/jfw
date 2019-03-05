@@ -2,6 +2,7 @@
 import { h } from '../../vdom'
 
 import 'codemirror/mode/xml/xml'
+import 'codemirror/mode/javascript/javascript'
 import './dnaseq-mode'
 
 
