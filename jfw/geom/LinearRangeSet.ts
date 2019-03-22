@@ -1,5 +1,5 @@
 
-import { LinearRange } from '.'
+import LinearRange from './LinearRange'
 
 export default class LinearRangeSet {
     
@@ -183,6 +183,14 @@ export default class LinearRangeSet {
 
         return this.ranges.length === 0
 
+    }
+
+    toPOD():any {
+        return this.ranges.map((range) => range.toPOD())
+    }
+
+    static fromPOD(pod:any):LinearRangeSet {
+        return new LinearRangeSet(pod.map((range) => LinearRange.fromPOD(range)))
     }
 
 }

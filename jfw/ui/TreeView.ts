@@ -266,6 +266,7 @@ function clickSelectNode(data) {
 
     console.log('tree: selected ' + JSON.stringify(node))
 
+    view.currentNodeID = node.id
     view._onSelect(node.id)
 
     app.update()

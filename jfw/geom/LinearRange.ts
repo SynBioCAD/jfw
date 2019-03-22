@@ -144,5 +144,13 @@ export default class LinearRange {
     toString():string {
         return '(' + this.start + ' -> ' + this.end + ')'
     }
+
+    toPOD():any {
+        return { start: this.start, end: this.end }
+    }
+
+    static fromPOD(pod:any):LinearRange {
+        return new LinearRange(pod.start, pod.end)
+    }
 }
 
