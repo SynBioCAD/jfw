@@ -86,6 +86,11 @@ export default class TreeView extends View {
         this.update()
     }
 
+    select(id:string) {
+        this.currentNodeID = id
+        this.update()
+    }
+
     render():VNode {
 
         const view = this
