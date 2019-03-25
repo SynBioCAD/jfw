@@ -212,6 +212,7 @@ export default abstract class Dialog {
         if(this.modal) {
 
             elements.push(h('div', {
+                'ev-click': clickEvent(clickCloseButton, { dialog: this, app: this.app }),
                 style: {
                     position: 'absolute',
                     top: 0,
