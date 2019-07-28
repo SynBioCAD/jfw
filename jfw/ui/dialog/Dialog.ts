@@ -10,7 +10,7 @@ import uuid from 'node-uuid'
 
 import { App } from '../..'
 
-import Hook from '../../Hook'
+import Hook from '../../util/Hook'
 
 export class DialogOptions {
     parent: Dialog|null

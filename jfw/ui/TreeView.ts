@@ -10,6 +10,7 @@ import App from "../App";
 import Dialog from "./dialog/Dialog";
 
 import keyupChangeEvent from '../event/keyup-change-handler'
+import { Hook } from 'jfw/util';
 
 export class TreeNode {
     id:string = ''
@@ -22,8 +23,8 @@ export default class TreeView extends View {
 
     expanded: {}
     editable: boolean
-    _onCreate: (parentID?:string) => void
-    _onSelect: (id:string) => void
+    onCreate: Hook</*parentID*/string>
+    onSelect: Hook</*id*/string>
     fetchNodes: () => Array<TreeNode>
     currentNodeID: string
     searchable: boolean
@@ -34,8 +35,8 @@ export default class TreeView extends View {
         super(app, dialog)
 
         this.expanded = {}
-        this._onSelect = (parentID?:string) => { console.warn('onSelect stub') }
-        this._onCreate = (id:string) => { console.warn('onCreate stub') }
+        this.onSelect = new Hook()
+        this.onCreate = new Hook()
         this.editable = false
         this.searchable = false
         this.searchQuery = ''
@@ -54,18 +55,6 @@ export default class TreeView extends View {
     setCurrentNodeID(id:string) {
 
         this.currentNodeID = id
-
-    }
-
-    onSelect(fn:(id:string) => void):void {
-
-        this._onSelect = fn
-
-    }
-
-    onCreate(fn:(parentID?:string) => void):void {
-
-        this._onCreate = fn
 
     }
 
@@ -272,7 +261,7 @@ function clickSelectNode(data) {
     console.log('tree: selected ' + JSON.stringify(node))
 
     view.currentNodeID = node.id
-    view._onSelect(node.id)
+    view.onSelect.fire(node.id)
 
     app.update()
 
@@ -284,7 +273,7 @@ function clickCreateNode(data) {
     const app = view.app
     const parentNode = data.parentNode
 
-    view._onCreate(parentNode ? parentNode.id : null)
+    view.onCreate.fire(parentNode ? parentNode.id : null)
 
     app.update()
 
