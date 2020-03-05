@@ -1,12 +1,12 @@
 {
   "name": "@biocad/jfw",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Monolithic framework for applications such as biocad",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "tsc -d -p ./ --outDir dist/"
+    "prepack": "tsc -d -p ./ --outDir dist/"
   },
   "directories": {
     "lib": "lib"
