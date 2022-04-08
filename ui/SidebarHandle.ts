@@ -1,7 +1,7 @@
 
 import { h, VNode } from "../vdom";
 import { Sidebar } from ".";
-import { drag } from 'jfw/event'
+import drag from '../event/drag'
 import Rect from "../geom/Rect";
 
 export default class SidebarResizer {

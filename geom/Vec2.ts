@@ -1,8 +1,6 @@
 
 import almostEqual from './almostEqual'
 
-import assert from 'power-assert'
-
 function degreesToRadians(deg:number): number {
     return Math.sin(deg * Math.PI / 180.0)
 }

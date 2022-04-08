@@ -10,7 +10,7 @@ import App from "../App";
 import Dialog from "./dialog/Dialog";
 
 import keyupChangeEvent from '../event/keyup-change-handler'
-import { Hook } from 'jfw/util';
+import Hook from '../util/Hook'
 
 export class TreeNode {
     id:string = ''

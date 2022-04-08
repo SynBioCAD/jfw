@@ -8,8 +8,6 @@ import Dialog from './ui/dialog/Dialog'
 import View from './ui/View'
 import Mode from './ui/Mode'
 
-import assert from 'power-assert'
-
 import { SubTree, Sidebar } from './ui'
 
 import ContextMenu from "./ui/ContextMenu";
@@ -192,8 +190,6 @@ export default abstract class App
 
         const i:number = this.dialogs.indexOf(dialog)
 
-        assert(i !== -1)
-
         this.dialogs.splice(i, 1)
 
         dialog.onClose.fire(undefined)
@@ -201,8 +197,6 @@ export default abstract class App
         if(dialog.parent) {
 
             const parentI = dialog.parent.children.indexOf(dialog)
-
-            assert(parentI !== -1)
 
             dialog.parent.children.splice(parentI, 1)
 

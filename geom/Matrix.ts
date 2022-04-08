@@ -2,8 +2,6 @@
 import Vec2 from './Vec2'
 import Rect from './Rect'
 
-import assert from 'power-assert'
-
 export default class Matrix {
 
     elements: Array<number>
@@ -89,8 +87,6 @@ export default class Matrix {
     }
 
     toSVGString(): string {
-
-        assert(this.elements.filter(isNaN).length === 0)
 
         return 'matrix(' + [
             this.elements[0], this.elements[3],
