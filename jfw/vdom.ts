@@ -9,7 +9,7 @@ import diff = require('virtual-dom/vtree/diff')
 import patch = require('virtual-dom/vdom/patch')
 import create = require('virtual-dom/vdom/create-element')
 //import partial from require('vdom-thunk')
-import crappyFromHTML = require('html2hscript')
+import crappyFromHTML from './html2hscript/index'
 import toHTML = require('vdom-to-html')
 
 

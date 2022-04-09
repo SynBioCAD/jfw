@@ -2,14 +2,24 @@
   "name": "@biocad/jfw",
   "version": "0.5.0",
   "description": "Monolithic framework for applications such as biocad",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/jfw/index.js",
+  "types": "./dist/jfw/index.d.ts",
+  "exports": {
+      ".": "./dist/jfw/index.js",
+      "./geom": "./dist/jfw/geom/index.js",
+      "./graphics": "./dist/jfw/graphics/index.js",
+      "./ui": "./dist/jfw/ui/index.js",
+      "./udata": "./dist/jfw/udata/index.js",
+      "./util": "./dist/jfw/util/index.js",
+      "./vdom": "./dist/jfw/vdom.js",
+      "./event": "./dist/jfw/event/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepack": "tsc -d -p ./ --outDir dist/"
   },
   "directories": {
-    "lib": "lib"
+      "lib": "jfw"
   },
   "dependencies": {
     "@types/codemirror": "0.0.76",
@@ -17,7 +27,6 @@
     "async": "^3.1.0",
     "binarysearch": "^1.0.0",
     "bowser": "^1.9.4",
-    "brfs": "^2.0.2",
     "browser-request": "git+https://github.com/adampash/browser-request.git#feat-add-headers-to-response",
     "circular-iterator": "^1.1.2",
     "codemirror": "^5.25.0",
@@ -26,7 +35,10 @@
     "dom-delegator": "^13.1.0",
     "elementtree": "^0.1.6",
     "express": "^4.15.4",
+    "he": "^1.2.0",
     "html2hscript": "^2.0.1",
+    "htmlparser2": "^7.2.0",
+    "is-empty": "0.0.1",
     "is-event-supported": "^1.0.1",
     "jquery": "^3.1.0",
     "left-pad": "^1.1.1",
@@ -37,6 +49,7 @@
     "shortid": "^2.2.8",
     "strongly-typed-events": "^1.0.1",
     "svgdom": "0.0.20",
+    "to-camel-case": "^0.2.1",
     "trie-search": "^1.0.9",
     "ts-node": "^8.3.0",
     "tsconfig-paths": "^3.8.0",
