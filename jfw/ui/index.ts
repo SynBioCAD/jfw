@@ -1,4 +1,6 @@
 
+import App from './App'
+import GlobalConfig from './GlobalConfig'
 import View from './View'
 import Sidebar, { SidebarSection, SidebarDivision } from './Sidebar'
 import Topbar from './Topbar'
@@ -18,9 +20,12 @@ import TextInput from './form-control/TextInput'
 import SidebarHandle from './SidebarHandle'
 import Mode from './Mode'
 import ContextMenu from './ContextMenu'
+import { ContextMenuItem } from './ContextMenu'
 import CodeMirrorWidget from './widget/CodeMirrorWidget'
 
 export {
+    App,
+    GlobalConfig,
     View,
     Sidebar,
     SidebarSection,
@@ -44,6 +49,7 @@ export {
     TextInput,
     Mode,
     ContextMenu,
+    ContextMenuItem,
     CodeMirrorWidget
 }
 

@@ -6,6 +6,7 @@ import flattenArrays from './flattenArrays'
 import Hook from './Hook'
 import KeyboardListener from './KeyboardListener'
 import MouseListener from './MouseListener'
+import Versioned from './Versioned'
 
 export {
     svgDomMatrices,
@@ -14,6 +15,7 @@ export {
     flattenArrays,
     Hook,
     KeyboardListener,
-    MouseListener
+    MouseListener,
+    Versioned
 }
 

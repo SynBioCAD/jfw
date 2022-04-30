@@ -1,5 +1,5 @@
 
-import App from '../App'
+import App from './App'
 import View from './View'
 import Sidebar from './Sidebar'
 import { VNode } from "../vdom";

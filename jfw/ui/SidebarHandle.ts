@@ -21,7 +21,7 @@ export default class SidebarResizer {
 
 function ondrag(data) {
 
-    console.dir(data)
+//     console.dir(data)
 
     let sidebar:Sidebar = data.sidebar
 

@@ -1,5 +1,5 @@
 
-import { App } from ".."
+import  App  from "./App"
 import { Dialog } from "./dialog"
 import { VNode } from '../vdom'
 

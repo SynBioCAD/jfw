@@ -8,7 +8,7 @@ import { documentMetrics } from '../../util'
 
 import uuid from 'node-uuid'
 
-import { App } from '../..'
+import  App from '../../ui/App'
 
 import Hook from '../../util/Hook'
 

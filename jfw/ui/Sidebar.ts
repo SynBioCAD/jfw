@@ -7,7 +7,7 @@ import { h } from '../vdom'
 import { click as clickEvent } from '../event'
 
 import { documentMetrics } from '../util'
-import App from "../App";
+import App from "./App";
 
 import { VNode } from '../vdom'
 

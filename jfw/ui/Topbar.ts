@@ -1,5 +1,5 @@
 import Mode from './Mode';
-import { App } from '..';
+import App from './App';
 
 import extend = require('xtend')
 import { h, VNode } from '../vdom'

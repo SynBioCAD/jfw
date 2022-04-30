@@ -6,7 +6,7 @@ import View from './View'
 import { click as clickEvent } from '../event'
 
 import { VNode, h } from '../vdom'
-import App from "../App";
+import App from "./App";
 import Dialog from "./dialog/Dialog";
 
 import keyupChangeEvent from '../event/keyup-change-handler'

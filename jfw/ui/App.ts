@@ -1,21 +1,21 @@
 
 
-import { VNode, h, diff, patch, create, main } from './vdom'
+import { VNode, h, diff, patch, create, main } from '../vdom'
 
 import Delegator = require('dom-delegator')
 
-import Dialog from './ui/dialog/Dialog'
-import View from './ui/View'
-import Mode from './ui/Mode'
+import Dialog from './dialog/Dialog'
+import View from './View'
+import Mode from './Mode'
 
-import { SubTree, Sidebar } from './ui'
+import { SubTree, Sidebar } from '.'
 
-import ContextMenu from "./ui/ContextMenu";
+import ContextMenu from "./ContextMenu";
 
-import { mousewheel as wheelEvent, fileDrop as fileDropEvent } from './event'
-import BrowserUData from './udata/BrowserUData';
-import UData from './udata/UData';
-import SidebarHandle from './ui/SidebarHandle';
+import { mousewheel as wheelEvent, fileDrop as fileDropEvent } from '../event'
+import BrowserUData from '../udata/BrowserUData';
+import UData from '../udata/UData';
+import SidebarHandle from './SidebarHandle';
 
 export default abstract class App
 {

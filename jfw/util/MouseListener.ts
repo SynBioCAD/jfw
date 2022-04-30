@@ -42,6 +42,8 @@ export default class MouseListener {
 
 
 
-document.onmousemove = (ev:MouseEvent) => {
-    MouseListener._onMouseMove(ev)
-}            
+if(typeof document !== 'undefined') {
+	document.onmousemove = (ev:MouseEvent) => {
+	MouseListener._onMouseMove(ev)
+	}            
+}
