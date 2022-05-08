@@ -80,16 +80,16 @@
     cursor: pointer;
 }
 
-.jfw-export-dialog {
+.jfw-tabbed-dialog {
     width: 80%;
 }
 
-.jfw-export-parts-tabs {
+.jfw-tabbed-dialog-tabs {
     width: 170px;
     overflow: hidden;
 }
 
-.jfw-export-parts-tab {
+.jfw-tabbed-dialog-tab {
     margin-bottom: 15px;
     cursor: pointer;
     width: 140px;
@@ -100,8 +100,65 @@
     flex-direction: row;
 }
 
-.jfw-export-parts-content {
+.jfw-tabbed-dialog-content {
     //width: calc(100% - 180px);
     flex: 1 1;
 }
 
+
+
+
+.jfw-tabbed-view {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	flex: 1;
+}
+
+.jfw-tabbed-view-tabs {
+
+	display: flex;
+	flex-direction: row;
+	justify-items: flex-start;
+	justify-content: flex-start;
+
+}
+
+.jfw-tabbed-view-tab {
+	border-bottom-left-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;
+}
+
+.jfw-tabbed-view-tab:not(:first-child) {
+	border-top-left-radius: 0px !important;
+}
+
+.jfw-tabbed-view-tab:not(:last-child) {
+	border-top-right-radius: 0px !important;
+}
+
+
+.jfw-tabbed-view-tab {
+	background-color: #ffda8f !important;
+	color: black !important;
+	font-size: large;
+	padding: 8px !important;
+	font-size: large !important;
+}
+
+.jfw-tabbed-view-tab.active {
+	background-color: #fff3da !important;
+	font-weight: bold;
+}
+
+.jfw-tabbed-view-content {
+	background-color: #fff3da;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	flex: 1;
+}
+
+.jfw-tabbed-view-content .loader {
+	filter: invert(100%);
+}

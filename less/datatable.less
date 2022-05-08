@@ -1,0 +1,58 @@
+
+.jfw-datatable {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.jfw-datatable tr {
+	padding: 0;
+	margin: 0;
+	// line-height: 60%;
+	cursor: pointer;
+}
+
+.jfw-datatable tr:nth-child(even) {
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.jfw-datatable tr:hover {
+	background: rgba(0, 0, 0, 0.075);
+}
+
+.jfw-datatable table {
+	padding: 8px;
+}
+
+.jfw-datatable th {
+	position: sticky;
+	top: 0px;
+	background-color: #fff3da;
+	color: black !important;
+	color: white;
+	padding: 8px;
+	text-align: left;
+	cursor: pointer;
+}
+
+.jfw-datatable td {
+	padding: 0;
+	margin: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.jfw-datatable-scroller {
+
+	overflow-y: scroll;
+	overflow-x: scroll;
+
+	flex: 1;
+	min-height: 0;
+}
+
+.jfw-datatable-view {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-height: 0;
+}

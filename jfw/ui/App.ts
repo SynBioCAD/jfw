@@ -144,7 +144,12 @@ export default abstract class App
             }
 
             if(this.mode && this.mode.view) {
-                ltrElements.push(h('div.jfw-flow-ttb.jfw-flow-grow', [
+                ltrElements.push(h('div.jfw-flow-ttb.jfw-flow-grow', {
+			style: {
+				minWidth: 0,
+				minHeight: 0
+			}
+		 }, [
                     this.mode.view.render()
                 ]))
             } else {
@@ -170,11 +175,19 @@ export default abstract class App
             elements.push(this.contextMenu.render())
         }
 
-        return h('div.jfw-container.jfw-flow-ttb', {
+        return h('div.jfw-flow-ttb', {
             'ev-dragover': fileDropEvent(onDragOver, { app: this }),
-            'ev-drop': fileDropEvent(onFileDrop, { app: this })
+            'ev-drop': fileDropEvent(onFileDrop, { app: this }),
+	    style:{
+		    flex: 1,
+		    minHeight: 0
+	    },
         }, elements.concat([
-            h('div.jfw-flow-grow.jfw-flow-ltr', ltrElements)
+            h('div.jfw-flow-grow.jfw-flow-ltr', {
+		    style: {
+			    minHeight: 0
+		    }
+	    },ltrElements)
         ]))
     }
 

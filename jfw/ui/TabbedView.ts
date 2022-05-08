@@ -1,12 +1,11 @@
 
-import { h } from '../../vdom'
-import Dialog from './Dialog'
-import View from '../View'
-import { click as clickEvent } from '../../event'
-import Tab from '../Tab'
 
+import View from './View'
+import { click as clickEvent } from '../event'
+import { h } from '../vdom'
+import Tab from './Tab'
 
-export default class TabbedDialog extends Dialog {
+export default class TabbedView extends View {
 
     tabs:Array<Tab>
     currentTab:Tab|null
@@ -34,7 +33,7 @@ export default class TabbedDialog extends Dialog {
         this.update()
     }
 
-    getContentView() {
+    render() {
 
         if(this.tabs.length === 0) {
 
@@ -45,10 +44,10 @@ export default class TabbedDialog extends Dialog {
         if(this.currentTab === null)
             throw new Error('???')
 
-        return h('div.jfw-tabbed-dialog-body', [
-            h('div.jfw-tabbed-dialog-tabs.jfw-no-select', this.tabs.map((tab) => {
+        return h('div.jfw-tabbed-view', [
+            h('div.jfw-tabbed-view-tabs.jfw-no-select', this.tabs.map((tab) => {
 
-                return h('div.jfw-input.jfw-no-select.jfw-button.jfw-tabbed-dialog-tab'
+                return h('div.jfw-input.jfw-no-select.jfw-button.jfw-tabbed-view-tab'
                             + (this.currentTab === tab ? '.active' : ''), {
 
                     'ev-click': clickEvent(clickTabButton, { dialog: this, tab: tab })
@@ -57,7 +56,7 @@ export default class TabbedDialog extends Dialog {
                                                         
             })),
 
-            h('div.jfw-tabbed-dialog-content',
+            h('div.jfw-tabbed-view-content',
                 this.currentTab.view.render()
             )
         ])

@@ -15,8 +15,9 @@ import Hook from '../util/Hook'
 export class TreeNode {
     id:string = ''
     title:string = ''
-    subnodes:Array<TreeNode> = []
+    subnodes:TreeNode[]|undefined = undefined
     expanded:boolean = false
+    fetchSubnodes:()=>Promise<TreeNode[]>
 }
 
 export default class TreeView extends View {
@@ -25,7 +26,11 @@ export default class TreeView extends View {
     editable: boolean
     onCreate: Hook</*parentID*/string>
     onSelect: Hook</*id*/string>
-    fetchNodes: () => Array<TreeNode>
+
+    fetchNodes: () => Promise<TreeNode[]>
+    nodes:TreeNode[]|undefined
+
+
     currentNodeID: string
     searchable: boolean
     searchQuery: string
@@ -43,9 +48,19 @@ export default class TreeView extends View {
 
     }
 
-    setNodeFetcher(fetchNodes:() => Array<TreeNode>):void {
+    setNodes(nodes:TreeNode[]) {
+	    this.nodes = nodes
+	    this.update()
+    }
+
+    setNodeFetcher(fetchNodes:() => Promise<TreeNode[]>):void {
 
         this.fetchNodes = fetchNodes
+
+	fetchNodes().then((nodes) => {
+		this.nodes = nodes
+		this.update()
+	})
 
         //this.selectedNode = nodeFetcher().filter((node) => node.defaultNode)[0]
 
@@ -80,16 +95,26 @@ export default class TreeView extends View {
         this.update()
     }
 
+    async fetchChildren(node:TreeNode) {
+
+	if(node.fetchSubnodes && !node.subnodes) {
+		node.subnodes = await node.fetchSubnodes()
+	}
+
+	this.update()
+
+    }
+
     render():VNode {
 
         const view = this
 
-        if(!this.fetchNodes)
+        if(!this.nodes)
             return h('div.loader')
 
         let searchQuery = this.searchQuery
 
-        const nodes:Array<TreeNode> = this.fetchNodes()
+        const nodes:Array<TreeNode> = this.nodes
 
         //if(nodes.length === 0)
             //return h('div.loader')
@@ -137,7 +162,10 @@ export default class TreeView extends View {
 
             var icon:VNode
 
-            if(node.subnodes.length > 0) {
+            if( (node.subnodes !== undefined && node.subnodes.length > 0)
+			||
+		(node.subnodes === undefined && node.fetchSubnodes)
+	    ) {
                 if(expanded[node.id])
                     icon = h('span.fa.fa-caret-down')
                 else
@@ -184,23 +212,33 @@ export default class TreeView extends View {
                 ] : []))
             ]
 
-            if(node.subnodes.length > 0 && (expanded[node.id] || searchQuery)) {
+            if((expanded[node.id] || searchQuery)) {
 
-                let renderedSubnodes:VNode[] = []
+		if(node.subnodes === undefined) { 
 
-                for(let subnode of node.subnodes) {
+			elements.push(h('div.loader'))
 
-                    let subnodeRes = renderNode(subnode, depth + 1, expanded, currentNodeID, editable)
+		} else {
 
-                    if(subnodeRes.anyVisible) {
-                        anyVisible = true
-                        renderedSubnodes.push(subnodeRes.renderedNode)
-                    }
-                }
+			let renderedSubnodes:VNode[] = []
 
-                elements.push(
-                    h('div', renderedSubnodes.concat(editable ? renderCreateNode(node, depth + 1) : []))
-                )
+			if(node.subnodes) {
+
+				for(let subnode of node.subnodes) {
+
+				let subnodeRes = renderNode(subnode, depth + 1, expanded, currentNodeID, editable)
+
+				if(subnodeRes.anyVisible) {
+					anyVisible = true
+					renderedSubnodes.push(subnodeRes.renderedNode)
+				}
+				}
+			}
+
+			elements.push(
+			h('div', renderedSubnodes.concat(editable ? renderCreateNode(node, depth + 1) : []))
+			)
+		}
             }
 
             return { renderedNode: h('div', elements), anyVisible }
@@ -247,6 +285,11 @@ function clickToggleNode(data) {
     const node = data.node
 
     view.expanded[node.id] = !view.expanded[node.id]
+
+    if(view.expanded[node.id] && node.subnodes === undefined) {
+	    view.fetchChildren(node)
+    }
+
 
     app.update()
 

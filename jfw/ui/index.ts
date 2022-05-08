@@ -10,7 +10,7 @@ import DetachedSubTree from './DetachedSubTree'
 import ListMenu from './ListMenu'
 import Dialog from './dialog/Dialog'
 import { DialogOptions } from './dialog/Dialog'
-import TabbedDialog, { Tab } from './dialog/TabbedDialog'
+import TabbedDialog from './dialog/TabbedDialog'
 import TreeDialog from './dialog/TreeDialog'
 import Button from './form-control/Button'
 import Combo from './form-control/Combo'
@@ -22,6 +22,9 @@ import Mode from './Mode'
 import ContextMenu from './ContextMenu'
 import { ContextMenuItem } from './ContextMenu'
 import CodeMirrorWidget from './widget/CodeMirrorWidget'
+import Tab from './Tab'
+import TabbedView from './TabbedView'
+import DataTable, { DataTableColumn } from './DataTable'
 
 export {
     App,
@@ -50,6 +53,9 @@ export {
     Mode,
     ContextMenu,
     ContextMenuItem,
-    CodeMirrorWidget
+    CodeMirrorWidget,
+    TabbedView,
+    DataTable,
+    DataTableColumn
 }
 
