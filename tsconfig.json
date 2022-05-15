@@ -7,9 +7,10 @@
 		"baseUrl": ".",
 		"alwaysStrict": true,
 		"strictNullChecks": true,
-		"module": "commonjs",
+		"module": "ES2020",
 		"paths": {
-		}
+		},
+		"moduleResolution": "node16"
 	},
 	"exclude": [
 		"node_modules",
