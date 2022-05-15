@@ -1,6 +1,6 @@
 {
   "name": "@biocad/jfw",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Monolithic framework for applications such as biocad",
   "main": "./dist/jfw/index.js",
   "types": "./dist/jfw/index.d.ts",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepack": "./node_modules/.bin/tsc -d -p ./ --outDir dist/"
+    "prepack": "rm -rf dist && ./node_modules/.bin/tsc -d -p ./ --outDir dist/"
   },
   "directories": {
     "lib": "jfw"
