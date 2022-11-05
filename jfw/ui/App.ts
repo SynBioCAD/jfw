@@ -17,29 +17,30 @@ import BrowserUData from '../udata/BrowserUData';
 import UData from '../udata/UData';
 import SidebarHandle from './SidebarHandle';
 
-export default abstract class App
+import Project from './Project'
+import Updateable from './Updateable'
+import DialogHost from './DialogHost'
+
+export default abstract class App implements Updateable
 {
-    dialogs: Array<Dialog>
-
-    leftSidebar: Sidebar|null
-    leftSidebarHandle:SidebarHandle|null
-
-    rightSidebar: Sidebar|null
-    rightSidebarHandle:SidebarHandle|null
-
-    topbar: View|null
-    views: Array<View>
+    projectbar: View|null
+//     views: Array<View>
     contextMenu: ContextMenu|null
     orphanViews: Array<View>
 
-    modes: Array<Mode>
-    mode: Mode
+    projects:Project[]
+
+    getCurrentProject():Project|null {
+	return this.projects.filter(p => p.active)[0] || null
+    }
 
     _mainLoop: any
 
     _stateToken: Object
 
     elem:HTMLElement
+
+    dialogs:DialogHost
 
     constructor(elem:HTMLElement) {
 
@@ -65,19 +66,13 @@ export default abstract class App
         delegator.listenTo('keyup')
         delegator.listenTo('change')
 
-        this.dialogs = new Array<Dialog>()
+        this.projectbar = null
+	this.projects = []
 
-        this.leftSidebar = null
-        this.leftSidebarHandle = null
+	this.dialogs = new DialogHost(this)
 
-        this.rightSidebar = null
-        this.rightSidebarHandle = null
-
-        this.topbar = null
-        this.views = new Array<View>()
         this.orphanViews = new Array<View>()
         this.contextMenu = null
-        this.modes = []
 
         this._stateToken = {}
 
@@ -97,7 +92,7 @@ export default abstract class App
 
     update():void {
 
-        //console.log('Whole app update')
+        // console.log('Whole app update')
 
         if(this._mainLoop) {
 
@@ -114,62 +109,26 @@ export default abstract class App
         const elements:Array<VNode> = []
         var ltrElements: any[] = []
 
+	let curProject = this.getCurrentProject()
+
+	let dialogs = [ ...this.dialogs.dialogs ]
+	if(curProject) {
+		dialogs = dialogs.concat(...curProject.dialogs.dialogs)
+	}
+
         Array.prototype.push.apply(elements,
-            this.dialogs.map((dialog) => {
+            dialogs.map((dialog) => {
                 return dialog.render()
             })
         )
 
-        if (this.topbar) {
-            elements.push(this.topbar.render())
+        if (this.projectbar) {
+            elements.push(this.projectbar.render())
         }
 
-        if(this.orphanViews.length > 0) {
-
-            const topOrphanView = this.orphanViews[this.orphanViews.length - 1]
-
-            ltrElements.push(topOrphanView.render())
-
-        } else {
-
-            if(this.leftSidebar) {
-                /*ltrElements.push(h('div.jfw-sidebar.jfw-sidebar-left' + (this.leftSidebar.lightMode ? '.jfw-light' : ''), [
-                    this.leftSidebar.render()
-                ]))
-                */
-               ltrElements.push(this.leftSidebar.render())
-
-                if(this.leftSidebarHandle)
-                    ltrElements.push(this.leftSidebarHandle.render())
-            }
-
-            if(this.mode && this.mode.view) {
-                ltrElements.push(h('div.jfw-flow-ttb.jfw-flow-grow', {
-			style: {
-				minWidth: 0,
-				minHeight: 0
-			}
-		 }, [
-                    this.mode.view.render()
-                ]))
-            } else {
-                ltrElements.push(h('div', [
-                    'no modes'
-                ]))
-
-            }
-
-            if(this.rightSidebar) {
-                if(this.rightSidebarHandle)
-                    ltrElements.push(this.rightSidebarHandle.render())
-                    /*
-                ltrElements.push(h('div.jfw-sidebar.jfw-sidebar-right' + (this.rightSidebar.lightMode ? '.jfw-light' : ''), [
-                    this.rightSidebar.render()
-                ]))*/
-               ltrElements.push(this.rightSidebar.render())
-            }
-
-        }
+	if(curProject) {
+	    elements.push(curProject.render())
+	}
 
         if(this.contextMenu) {
             elements.push(this.contextMenu.render())
@@ -182,57 +141,7 @@ export default abstract class App
 		    flex: 1,
 		    minHeight: 0
 	    },
-        }, elements.concat([
-            h('div.jfw-flow-grow.jfw-flow-ltr', {
-		    style: {
-			    minHeight: 0
-		    }
-	    },ltrElements)
-        ]))
-    }
-
-    openDialog(dialog:Dialog): void {
-
-        //this.dialogs.push(new SubTree(dialog))
-        this.dialogs.push(dialog)
-        this.update()
-
-    }
-
-    closeDialog(dialog:Dialog): void {
-
-        const i:number = this.dialogs.indexOf(dialog)
-
-        this.dialogs.splice(i, 1)
-
-        dialog.onClose.fire(undefined)
-
-        if(dialog.parent) {
-
-            const parentI = dialog.parent.children.indexOf(dialog)
-
-            dialog.parent.children.splice(parentI, 1)
-
-        }
-
-        this.update()
-
-    }
-
-    closeDialogAndParents(dialog:Dialog):void {
-
-        for(;;) {
-
-            this.closeDialog(dialog)
-
-            if(dialog.parent === null)
-                break
-
-            dialog = dialog.parent
-
-        }
-
-
+        }, elements)
     }
 
     openOrphanView(view:View):void {
@@ -256,71 +165,34 @@ export default abstract class App
 
     }
 
-    setLeftSidebar(sidebar:Sidebar): void {
+    setProjectBar(projectbar) {
 
-        this.leftSidebar = sidebar
-        this.leftSidebarHandle = new SidebarHandle(sidebar)
+        this.projectbar = projectbar
         this.update()
 
     }
 
-    setRightSidebar(sidebar:Sidebar): void {
 
-        this.rightSidebar = sidebar
-        this.rightSidebarHandle = new SidebarHandle(sidebar)
-        this.update()
+    addProject(project:Project) {
+	console.log('Add Project to App', project.title)
 
+	if(this.projects.filter(p => p.id === project.id).length > 0)
+		return
+
+	this.projects.unshift(project)
+	this.update()
     }
 
-    setTopbar(topbar): void {
+    removeProject(project:Project) {
 
-        this.topbar = topbar
-        this.update()
+	for(let n = 0; n < this.projects.length; ++ n) {
+		if(this.projects[n].id === project.id) {
+			this.projects.splice(n, 1)
+			break
+		}
+	}
 
-    }
-
-    setModes(modes:Array<Mode>): void {
-
-        this.orphanViews = []
-
-        this.modes = modes
-
-        const defMode:Mode|undefined = this.modes.filter((mode) => mode.active)[0]
-
-        if(defMode !== undefined) {
-            this.setMode(defMode)
-        } else if(modes.length > 0) {
-            this.setMode(modes[0])
-        }
-
-
-
-        this.update()
-
-    }
-
-    setMode(mode): void {
-
-        this.orphanViews = []
-
-        this.modes.forEach((_mode) => {
-            _mode.active = false
-        })
-
-        if(this.mode && this.mode.view)
-            this.mode.view.deactivate()
-
-        this.mode = mode
-        mode.active = true
-
-        this.setLeftSidebar(mode.leftSidebar)
-        this.setRightSidebar(mode.rightSidebar)
-
-        if(mode.view)
-            mode.view.activate()
-
-        this.update()
-
+	this.update()
     }
 
     displayError(err:Error): void {

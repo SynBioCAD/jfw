@@ -7,10 +7,10 @@ import { click as clickEvent } from '../event'
 
 import { VNode, h } from '../vdom'
 import App from "./App";
-import Dialog from "./dialog/Dialog";
 
 import keyupChangeEvent from '../event/keyup-change-handler'
 import Hook from '../util/Hook'
+import Updateable from './Updateable';
 
 export class TreeNode {
     id:string = ''
@@ -35,9 +35,9 @@ export default class TreeView extends View {
     searchable: boolean
     searchQuery: string
 
-    constructor(app:App, dialog?:Dialog) {
+    constructor(updateable:Updateable) {
 
-        super(app, dialog)
+        super(updateable)
 
         this.expanded = {}
         this.onSelect = new Hook()
@@ -57,14 +57,21 @@ export default class TreeView extends View {
 
         this.fetchNodes = fetchNodes
 
-	fetchNodes().then((nodes) => {
+        //this.selectedNode = nodeFetcher().filter((node) => node.defaultNode)[0]
+
+	this.refresh()
+
+    }
+
+    refresh() {
+
+	this.fetchNodes().then((nodes) => {
 		this.nodes = nodes
 		this.update()
 	})
 
-        //this.selectedNode = nodeFetcher().filter((node) => node.defaultNode)[0]
+	this.update()
 
-        this.app.update()
     }
 
     setCurrentNodeID(id:string) {
@@ -281,7 +288,6 @@ export default class TreeView extends View {
 function clickToggleNode(data) {
 
     const view = data.view
-    const app = view.app
     const node = data.node
 
     view.expanded[node.id] = !view.expanded[node.id]
@@ -291,14 +297,13 @@ function clickToggleNode(data) {
     }
 
 
-    app.update()
+    view.update()
 
 }
 
 function clickSelectNode(data) {
 
     const view = data.view
-    const app = view.app
     const node = data.node
 
     console.log('tree: selected ' + JSON.stringify(node))
@@ -306,19 +311,18 @@ function clickSelectNode(data) {
     view.currentNodeID = node.id
     view.onSelect.fire(node.id)
 
-    app.update()
+    view.update()
 
 }
 
 function clickCreateNode(data) {
 
     const view = data.view
-    const app = view.app
     const parentNode = data.parentNode
 
     view.onCreate.fire(parentNode ? parentNode.id : null)
 
-    app.update()
+    view.update()
 
 }
 

@@ -24,9 +24,9 @@ export default class TreeDialog extends Dialog {
     nodes:Array<TreeNode>
     currentNode:TreeNode|null
 
-    constructor(app, parent) {
+    constructor(updateable, host, opts) {
 
-        super(app, parent)
+        super(updateable, host, opts)
 
         if(new.target === TreeDialog) {
             throw new TypeError('TreeDialog base class is abstract; cannot be instantiated')
@@ -48,7 +48,7 @@ export default class TreeDialog extends Dialog {
         if(this.currentNode)
             this.currentNode.view.activate()
 
-        this.app.update()
+        this.update()
 
     }
 
@@ -117,19 +117,17 @@ export default class TreeDialog extends Dialog {
 function clickToggleNode(data) {
 
     const dialog = data.dialog
-    const app = dialog.app
     const node = data.node
 
     node.expanded = !node.expanded
 
-    app.update()
+    dialog.update()
 
 }
 
 function clickSelectNode(data) {
 
     const dialog = data.dialog
-    const app = dialog.app
     const node = data.node
 
     console.log('selected ', node.title)
@@ -138,7 +136,7 @@ function clickSelectNode(data) {
 
     node.view.activate()
 
-    app.update()
+    dialog.update()
 
 }
 

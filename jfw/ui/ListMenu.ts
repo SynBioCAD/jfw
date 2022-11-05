@@ -13,9 +13,9 @@ export default class ListMenu extends View {
 
     items:Array<ListItem>
 
-    constructor(app) {
+    constructor(project) {
 
-        super(app)
+        super(project)
 
         this.items = []
 
@@ -24,7 +24,7 @@ export default class ListMenu extends View {
     setItems(items) {
 
         this.items = items
-        this.app.update()
+        this.update()
 
     }
 

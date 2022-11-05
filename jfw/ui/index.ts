@@ -25,6 +25,8 @@ import CodeMirrorWidget from './widget/CodeMirrorWidget'
 import Tab from './Tab'
 import TabbedView from './TabbedView'
 import DataTable, { DataTableColumn } from './DataTable'
+import Project from './Project'
+import Projectbar from './Projectbar'
 
 export {
     App,
@@ -56,6 +58,8 @@ export {
     CodeMirrorWidget,
     TabbedView,
     DataTable,
-    DataTableColumn
+    DataTableColumn,
+    Project,
+    Projectbar
 }
 

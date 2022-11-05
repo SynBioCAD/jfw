@@ -45,9 +45,7 @@ export class SidebarSection {
 
 }
 
-export default abstract class Sidebar {
-
-    app:App
+export default abstract class Sidebar extends View {
 
     divisions:Array<SidebarDivision>
     currentDivision:SidebarDivision|null
@@ -56,9 +54,9 @@ export default abstract class Sidebar {
 
     width:number
 
-    constructor(app:App) {
+    constructor(updateable) {
 
-        this.app = app
+        super(updateable)
 
         this.divisions = []
         this.currentDivision = null
@@ -92,8 +90,6 @@ export default abstract class Sidebar {
 
     render():VNode {
 
-        const app:App = this.app
-
         let sidebar = this
 
         var children:Array<VNode> = []
@@ -101,7 +97,7 @@ export default abstract class Sidebar {
         let divisions = h('div.jfw-sidebar-divisions', h('div.jfw-sidebar-divisions-inner', this.divisions.map((division) => {
             
             return h('div.jfw-sidebar-division' + (division === this.currentDivision ? '.selected' : ''), {
-                'ev-click': clickEvent(clickDivision, { sidebar: this, division: division })
+                'ev-click': clickEvent(clickDivision, { sidebar, division: division })
             }, division.title)
 
         })))
@@ -160,7 +156,7 @@ export default abstract class Sidebar {
                         'width': sidebar.width - indent * indentSize
                     },
 
-                    'ev-click': clickEvent(clickHeader, { app: app, section: section })
+                    'ev-click': clickEvent(clickHeader, { sidebar, section: section })
 
                 }, ([
 
@@ -179,15 +175,15 @@ function clickDivision(data) {
     const { sidebar, division } = data
 
     sidebar.currentDivision = division
-    sidebar.app.update()
+    sidebar.update()
 }
 
 function clickHeader(data) {
 
-    const { app, section } = data
+    const { sidebar, section } = data
 
     section.isOpen = !section.isOpen
 
-    app.update()
+    sidebar.update()
 }
 

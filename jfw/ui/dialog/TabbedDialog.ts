@@ -11,9 +11,9 @@ export default class TabbedDialog extends Dialog {
     tabs:Array<Tab>
     currentTab:Tab|null
 
-    constructor(app, opts) {
+    constructor(updateable, host, opts) {
 
-        super(app, opts)
+        super(updateable, host, opts)
 
         this.tabs = []
         this.currentTab = null
@@ -68,7 +68,6 @@ export default class TabbedDialog extends Dialog {
 function clickTabButton(data) {
 
     const dialog = data.dialog
-    const app = dialog.app
     const tab = data.tab
 
     if(dialog.currentTab)

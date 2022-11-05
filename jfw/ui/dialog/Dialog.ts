@@ -11,6 +11,8 @@ import uuid from 'node-uuid'
 import  App from '../../ui/App'
 
 import Hook from '../../util/Hook'
+import DialogHost from '../DialogHost'
+import Updateable from '../Updateable'
 
 export class DialogOptions {
     parent: Dialog|null
@@ -19,7 +21,8 @@ export class DialogOptions {
 
 export default abstract class Dialog {
 
-    app: App
+	host:DialogHost
+
     parent: Dialog|null
     children: Array<Dialog>
     modal: boolean
@@ -31,9 +34,9 @@ export default abstract class Dialog {
 
     onClose:Hook<void>
 
-    constructor(app:App, opts:DialogOptions) {
+    constructor(private updateable:Updateable, host:DialogHost, opts:DialogOptions) {
         
-        this.app = app
+        this.host = host
 
         this.parent = opts.parent || null
         this.children = []
@@ -51,10 +54,14 @@ export default abstract class Dialog {
         this.onClose = new Hook<void>()
     }
 
+    update() {
+	this.updateable.update()
+    }
+
     setTitle(title:string) {
 
         this.title = title
-        this.app.update()
+        this.update()
 
     }
 
@@ -212,7 +219,7 @@ export default abstract class Dialog {
         if(this.modal) {
 
             elements.push(h('div', {
-                'ev-click': clickEvent(clickCloseButton, { dialog: this, app: this.app }),
+                'ev-click': clickEvent(clickCloseButton, { dialog: this }),
                 style: {
                     position: 'absolute',
                     top: 0,
@@ -235,32 +242,24 @@ export default abstract class Dialog {
 
     }
 
-    update() {
-
-        this.app.update()
-
-    }
-
 }
 
 function clickCloseButton(data) {
 
     const dialog = data.dialog
-    const app = dialog.app
+    const host = dialog.host
 
-    app.closeDialog(dialog)
+    host.closeDialog(dialog)
 }
 
 function dragDialog(data) {
 
     const dialog = data.dialog
-    const app = dialog.app
 
     if(!dialog.isFullScreen) {
 
         dialog.pos = Vec2.fromXY(data.x, data.y)
-
-        app.update()
+        dialog.update()
     }
 
 }
@@ -272,7 +271,7 @@ function clickFullScreenButton(data) {
 
     dialog.isFullScreen = !dialog.isFullScreen
 
-    app.update()
+    dialog.update()
 }
 
 

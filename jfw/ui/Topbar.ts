@@ -7,14 +7,15 @@ import { h, VNode } from '../vdom'
 import { documentMetrics } from '../util'
 
 import { click as clickEvent } from '../event'
+import Project from './Project';
 
 export default abstract class Topbar {
 
-    app:App
+    project:Project
 
-    constructor(app:App) {
+    constructor(project:Project) {
 
-        this.app = app
+        this.project = project
 
     }
 
@@ -53,9 +54,7 @@ export default abstract class Topbar {
 
     renderLeft():VNode {
 
-        const app:App = this.app
-
-        const modes:Array<Mode> = app.modes
+        const modes:Array<Mode> = this.project.modes
 
         const elements:Array<VNode> = []
 
@@ -65,7 +64,7 @@ export default abstract class Topbar {
                 h('span.jfw-spacer', ' '),
                 h('button.jfw-topbar-tab' + (mode.active ? '.active' : ''), {
 
-                    'ev-click': clickEvent(clickTab, { app: app, mode: mode }),
+                    'ev-click': clickEvent(clickTab, { project: this.project, mode: mode }),
 
                 }, mode.getName())
             )
@@ -85,9 +84,9 @@ export default abstract class Topbar {
 
 function clickTab(data) {
 
-    const { app, mode } = data
+    const { project, mode } = data
 
-    app.setMode(mode)
+    project.setMode(mode)
 
 }
 

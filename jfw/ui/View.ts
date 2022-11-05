@@ -2,17 +2,13 @@
 import  App  from "./App"
 import { Dialog } from "./dialog"
 import { VNode } from '../vdom'
+import Updateable from "./Updateable"
 
-export default abstract class View {
+export default abstract class View implements Updateable {
 
-    app:App
-    dialog:Dialog|null
     _update:() => void
 
-    constructor(app:App, dialog?:Dialog) {
-
-        this.app = app
-        this.dialog = dialog || null
+    constructor(updateable:Updateable) {
 
         /* default updates the whole app
          *
@@ -20,7 +16,7 @@ export default abstract class View {
          * it update the subtree only
          */
         this._update = () => {
-            this.app.update()
+            updateable.update()
         }
 
     }
@@ -31,7 +27,7 @@ export default abstract class View {
     deactivate():void {
     }
 
-    abstract render():VNode
+    abstract render():VNode|VNode[]
 
     update():void {
 

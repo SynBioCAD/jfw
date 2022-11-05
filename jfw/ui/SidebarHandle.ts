@@ -34,7 +34,7 @@ function ondrag(data) {
         let sidebarElem = target.previousElementSibling
 
         sidebar.width = data.x
-        sidebar.app.update()
+        sidebar.update()
 
     } else if(target.nextElementSibling.classList.contains('jfw-sidebar')) {
 
@@ -43,7 +43,7 @@ function ondrag(data) {
         let sidebarElem = target.nextElementSibling
 
         sidebar.width = window.innerWidth - data.x
-        sidebar.app.update()
+        sidebar.update()
 
     }
 }

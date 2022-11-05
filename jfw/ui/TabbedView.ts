@@ -10,9 +10,9 @@ export default class TabbedView extends View {
     tabs:Array<Tab>
     currentTab:Tab|null
 
-    constructor(app, opts) {
+    constructor(updateable) {
 
-        super(app, opts)
+        super(updateable)
 
         this.tabs = []
         this.currentTab = null

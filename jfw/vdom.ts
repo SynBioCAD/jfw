@@ -4,7 +4,6 @@ import { h, VNode } from 'virtual-dom'
 
 import svg = require('virtual-dom/virtual-hyperscript/svg')
 import Thunk = require('vdom-thunk')
-import main = require('main-loop')
 import diff = require('virtual-dom/vtree/diff')
 import patch = require('virtual-dom/vdom/patch')
 import create = require('virtual-dom/vdom/create-element')
@@ -12,6 +11,8 @@ import create = require('virtual-dom/vdom/create-element')
 import crappyFromHTML from './html2hscript/index'
 import toHTML = require('vdom-to-html')
 
+//import main = require('main-loop')
+import main from './main-loop'
 
 import active from './active'
 

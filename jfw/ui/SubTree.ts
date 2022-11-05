@@ -25,9 +25,11 @@ export default class SubTree {
 
     overrideViewUpdate():void {
 
+	let origUpdate = this.view._update
+
         this.view._update = () => {
             this._stateToken = {}
-            this.view.app.update()
+            origUpdate()
         }
 
     }
