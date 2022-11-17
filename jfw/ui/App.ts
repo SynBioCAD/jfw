@@ -29,10 +29,17 @@ export default abstract class App implements Updateable
     orphanViews: Array<View>
 
     projects:Project[]
+    zeroProjectsView:View|null
+    addProjectView:View|null
+
+    abstract getInitialProjects():Promise<Project[]>
 
     getCurrentProject():Project|null {
 	return this.projects.filter(p => p.active)[0] || null
     }
+
+    abstract createZeroProjectsView():View
+    abstract createAddProjectView():View
 
     _mainLoop: any
 
@@ -79,8 +86,10 @@ export default abstract class App implements Updateable
         this.elem = elem
     }
 
-    init():void {
+    async init():Promise<void> {
 
+	this.setProjects( await this.getInitialProjects() );
+	
         this._mainLoop = main(this._stateToken, this.render.bind(this), {
             diff: diff,
             create: create,
@@ -88,6 +97,7 @@ export default abstract class App implements Updateable
         })
 
         this.elem.appendChild(this._mainLoop.target)
+
     }
 
     update():void {
@@ -122,12 +132,18 @@ export default abstract class App implements Updateable
             })
         )
 
-        if (this.projectbar) {
-            elements.push(this.projectbar.render())
-        }
+	if(this.zeroProjectsView) {
+		elements.push(this.zeroProjectsView.render())
+	} else {
+		if (this.projectbar) {
+		elements.push(this.projectbar.render())
+		}
 
-	if(curProject) {
-	    elements.push(curProject.render())
+		if(curProject) {
+		elements.push(curProject.render())
+		} else if(this.addProjectView) {
+		elements.push(this.addProjectView.render())
+		}
 	}
 
         if(this.contextMenu) {
@@ -180,16 +196,29 @@ export default abstract class App implements Updateable
 		return
 
 	this.projects.unshift(project)
-	this.update()
+	this.setProjects(this.projects)
     }
 
-    removeProject(project:Project) {
+    closeProject(project:Project) {
 
 	for(let n = 0; n < this.projects.length; ++ n) {
 		if(this.projects[n].id === project.id) {
 			this.projects.splice(n, 1)
 			break
 		}
+	}
+
+	this.setProjects(this.projects)
+    }
+
+    setProjects(projects:Project[]) {
+
+	this.projects = projects
+
+	if(this.projects.length === 0) {
+		this.zeroProjectsView = this.createZeroProjectsView()
+	} else {
+		this.zeroProjectsView = null
 	}
 
 	this.update()

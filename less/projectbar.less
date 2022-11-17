@@ -1,0 +1,133 @@
+
+@import "variables.less";
+
+.jfw-projectbar {
+
+    background-color: #d7d7d7;
+    pointer-events: none;
+    overflow: hidden;
+    width: 100%;
+    height: @projectbarHeight;
+    flex-shrink: 0;
+
+//     background-image: url('../img/synform.svg');
+//     background-position: right 10px bottom 10px;
+//     background-size: auto calc(@projectbarHeight * 0.6);
+//     background-repeat: no-repeat;
+
+}
+
+.jfw-projectbar-container {
+    padding: 0;
+    pointer-events: none;
+    height: @projectbarHeight;
+}
+
+.jfw-projectbar-left {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    pointer-events: none;
+    overflow: hidden;
+    height: @projectbarHeight;
+}
+
+.jfw-projectbar-right {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    pointer-events: none;
+    overflow: hidden;
+    height: @projectbarHeight;
+}
+
+.jfw-projectbar-tab {
+//     font-weight: bold;
+
+font-style: italic;
+    font-family: sans-serif;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: large;
+
+    background-color: none;
+    border: none;
+    color: black;
+    border-bottom: 2px solid white;
+
+    pointer-events: all;
+    cursor: pointer;
+
+    z-index: 10000;
+
+    outline: none;
+
+    height: @projectbarHeight;
+    line-height: @projectbarHeight;
+}
+
+
+.jfw-projectbar-tab.active {
+
+    background-color: white;
+    color: black;
+}
+
+.jfw-projectbar-tab .jfw-projectbar-close {
+	visibility: hidden;
+	color: rgb(188, 188, 188);
+}
+.jfw-projectbar-tab .jfw-projectbar-rename {
+	visibility: hidden;
+	color: rgb(188, 188, 188);
+}
+
+
+.jfw-projectbar-tab.active .jfw-projectbar-close {
+	visibility: visible;
+}
+.jfw-projectbar-tab.active .jfw-projectbar-rename {
+	visibility: visible;
+}
+.jfw-projectbar-tab:hover .jfw-projectbar-close {
+	visibility: visible;
+}
+.jfw-projectbar-tab:hover .jfw-projectbar-rename {
+	visibility: visible;
+}
+
+
+.jfw-projectbar-tab.add:hover a {
+
+	color: rgb(26, 146, 26);
+//     background-color: rgb(220, 220, 220);
+}
+
+.jfw-projectbar-config-button {
+
+    font-size: xx-large;
+    color: #DDD;
+    cursor: pointer;
+    pointer-events: all;
+
+}
+
+.jfw-projectbar-config-button:hover {
+
+    font-size: xx-large;
+    color: white;
+
+}
+
+.jfw-projectbar-close:hover span.fa {
+	color: rgb(255, 157, 157);
+}
+
+.jfw-projectbar-rename:hover span.fa {
+	color: rgb(203, 203, 45);
+}
+
+
+

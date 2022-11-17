@@ -11,6 +11,8 @@
 
 @import "variables.less";
 
+@import "projectbar.less";
+
 @import "dialog.less";
 @import "sidebar.less";
 @import "topbar.less";
@@ -579,5 +581,19 @@ a.jfw-link:hover {
 .jfw-tabbed-dialog-content {
     //width: calc(100% - 180px);
     flex: 1 1;
+}
+
+
+.jfw-weblink {
+	color: blue !important;
+	text-decoration: none;
+}
+.jfw-weblink:hover {
+	color: blue !important;
+	text-decoration: underline;
+}
+
+.jfw-invalid {
+	background-color: rgb(255, 255, 228);
 }
 

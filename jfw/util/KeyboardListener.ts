@@ -33,8 +33,8 @@ export default class KeyboardListener {
 
 if(typeof window !== 'undefined') {
 	window.onkeydown = (ev:KeyboardEvent) => {
-		console.log('wkd')
-		console.log(ev)
+		// console.log('wkd')
+		// console.log(ev)
 		KeyboardListener._onKeyDown(ev)
 	}            
 }

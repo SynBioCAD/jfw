@@ -5,35 +5,57 @@ import View from "./View"
 import { click as clickEvent } from '../event'
 import Hook from "../util/Hook"
 
-export interface DataTableColumn {
+export interface DataTableColumn<T> {
+	id:string
 	title:string
-	getValue:(item:any)=>string
+	getValue:(item:T)=>string
 }
 
-export default class DataTable extends View {
+type DataTableGetter<T> = (offset:number, limit:number, sortBy:DataTableColumn<T>|undefined, sortOrder:'asc'|'desc', filter:string)=>Promise<{ total:number, rows: T[] }>
+export default class DataTable<T> extends View {
 
-	view:View
+	columns:DataTableColumn<T>[]
 
-	columns:DataTableColumn[]
-
-	sortBy:DataTableColumn|undefined
+	sortBy:DataTableColumn<T>|undefined
 	sortOrder:'asc'|'desc'
-	rows:any[]
 
-	offset:number|undefined
-	limit:number|undefined
+	rows:T[]|null
+	total:number
 
-	onClickRow:Hook<any> = new Hook()
+	offset:number
+	limit:number
+	filter:string
+
+	onClickRow:Hook<T> = new Hook()
+
+
+	getter:DataTableGetter<T>
     
-	constructor(app:App, columns:DataTableColumn[]) {
+	constructor(updateable, columns:DataTableColumn<T>[], getter:DataTableGetter<T>) {
 
-		super(app)
+		super(updateable)
 
 		this.columns = columns
+		this.offset = 0
+		this.limit = 10
+		this.rows = null
+		this.total = 0
+		this.filter = ''
+		this.getter = getter
+
+		this.fetchRows()
 	}
 
-	setRows(rows:any) {
+	async fetchRows() {
+
+		this.rows = null
+		this.update()
+
+		let { rows, total } = await this.getter(this.offset, this.limit, this.sortBy, this.sortOrder, this.filter)
+
 		this.rows = rows
+		this.total = total
+
 		this.update()
 	}
 
@@ -42,33 +64,7 @@ export default class DataTable extends View {
 		let columns = this.columns
 		let rows = this.rows
 
-		let offset = this.offset
-		let limit = this.limit
-
-		if(offset !== undefined) {
-			rows = rows.slice(offset)
-		}
-
-		if(limit !== undefined) {
-			rows = rows.slice(0, limit)
-		}
-
-		let sortBy = this.sortBy
-
-		if(sortBy !== undefined) {
-			rows = rows.slice(0).sort((a, b) => {
-				let va = sortBy!.getValue(a) || ''
-				let vb = sortBy!.getValue(b) || ''
-				if(this.sortOrder === 'asc') { 
-				return va.localeCompare(vb)
-				} else {
-				return vb.localeCompare(va)
-				}
-			})
-		}
-
-
-		return h('div.jfw-datatable-scroller', [
+		return h('div', [
 			h('table.jfw-datatable', [
 				h('thead', columns.map(c => {
 
@@ -76,9 +72,6 @@ export default class DataTable extends View {
 					if(this.sortBy === c) {
 						sort = [' ', this.sortOrder === 'asc' ? '↑' : '↓']
 					}
-
-
-
 
 						return h('th', {
 							'ev-click': clickEvent(clickHeader, { table: this, c })
@@ -97,12 +90,15 @@ export default class DataTable extends View {
 						}))
 					}) : h('div', 'loading')
 				)
+			]),
+			h('div.jfw-datatable-controls', [
+				'Showing ' + (this.offset + 1) + ' to ' + (this.offset + 1 + this.limit) + ' of ' + this.total + ' entries'
 			])
 		])
 
 	}
 
-	clickColumn(c:DataTableColumn) {
+	clickColumn(c:DataTableColumn<T>) {
 
 		if(this.sortBy === c) {
 			this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc'
@@ -111,7 +107,7 @@ export default class DataTable extends View {
 			this.sortOrder = 'asc'
 		}
 
-		this.update()
+		this.fetchRows()
 	}
 
     }
