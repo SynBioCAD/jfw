@@ -9,7 +9,7 @@ import patch = require('virtual-dom/vdom/patch')
 import create = require('virtual-dom/vdom/create-element')
 //import partial from require('vdom-thunk')
 import crappyFromHTML from './html2hscript/index'
-import toHTML = require('vdom-to-html')
+import toHTML from './vdom-to-html/index'
 
 //import main = require('main-loop')
 import main from './main-loop'
