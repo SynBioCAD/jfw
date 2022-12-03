@@ -7,7 +7,7 @@ import extend = require('xtend')
 
 import Vec2 from '../geom/Vec2'
 
-import normalizeWheel, { getEventType } from '../deps/normalizeWheel/normalizeWheel'
+import normalizeWheel from 'normalize-wheel-es'
 
 import BaseEvent = require('value-event/base-event')
 
@@ -25,7 +25,7 @@ const exp = BaseEvent(handleMouseWheel)
 
 exp.getEventName = () => {
 
-    return getEventType()
+    return (normalizeWheel as any).getEventType()
 
 }
 

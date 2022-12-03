@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepack": "rm -rf dist && ./node_modules/.bin/tsc -d -p ./ --outDir dist/"
+    "build": "rm -rf dist && ./node_modules/.bin/tsc -d -p ./ --outDir dist/"
   },
   "directories": {
     "lib": "jfw"
@@ -44,6 +44,7 @@
     "left-pad": "^1.1.1",
     "main-loop": "git+https://github.com/udp/main-loop.git#dc3ef23aa4ea25b42489864f5730b095aabe3c43",
     "node-uuid": "^1.4.7",
+    "normalize-wheel-es": "^1.2.0",
     "sequence-formatter": "^1.0.0",
     "sha1": "^1.1.1",
     "shortid": "^2.2.8",
@@ -51,17 +52,15 @@
     "svgdom": "0.0.20",
     "to-camel-case": "^0.2.1",
     "trie-search": "^1.0.9",
-    "ts-node": "^8.3.0",
     "tsconfig-paths": "^3.8.0",
     "uuid": "^3.0.1",
     "value-event": "^5.1.1",
     "vdom-thunk": "^3.0.0",
-    "vdom-to-html": "^2.3.1",
     "virtual-dom": "^2.1.1",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
-    "typescript": "^4.8.0-dev.20220515"
+    "typescript": "^4.9.3"
   },
   "author": "",
   "license": "BSD-2-Clause"
